@@ -1,16 +1,18 @@
 import { motion } from 'framer-motion'
 import { useOrderStore } from '../store/useOrderStore.js'
-import { useInventoryStore } from '../store/useInventoryStore.js'
+import { useInventoryStore, BASELINE_PRODUCTS } from '../store/useInventoryStore.js'
+
+const BASE = import.meta.env.BASE_URL
 
 export default function SummaryView({ onBack }) {
   const items = useOrderStore((s) => s.items)
-  const getAllProducts = useInventoryStore((s) => s.getAllProducts)
+  const customProducts = useInventoryStore((s) => s.customProducts)
   const addItem = useOrderStore((s) => s.addItem)
   const removeItem = useOrderStore((s) => s.removeItem)
   const deleteItem = useOrderStore((s) => s.deleteItem)
   const clearOrder = useOrderStore((s) => s.clearOrder)
 
-  const products = getAllProducts()
+  const products = [...BASELINE_PRODUCTS, ...customProducts]
   const productMap = Object.fromEntries(products.map((p) => [p.id, p]))
 
   const activeItems = Object.entries(items).filter(
@@ -22,7 +24,7 @@ export default function SummaryView({ onBack }) {
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col flex-1 min-h-0">
       <div className="flex items-center justify-between mb-4 flex-shrink-0">
         <h2 className="text-xl font-bold">Pedido</h2>
         <button
@@ -54,6 +56,13 @@ export default function SummaryView({ onBack }) {
                   transition={{ duration: 0.15 }}
                   className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-gray-800/50"
                 >
+                  {product?.icon ? (
+                    <img src={`${BASE}assets/icons/${product.icon}`} alt={product.name} className="w-8 h-8 object-contain flex-shrink-0" />
+                  ) : (
+                    <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-700 text-base flex-shrink-0">
+                      ☕
+                    </div>
+                  )}
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-sm truncate">
                       {product?.name || id}

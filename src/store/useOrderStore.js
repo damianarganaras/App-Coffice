@@ -41,6 +41,7 @@ export const useOrderStore = create(
     }),
     {
       name: 'cafe-active-order',
+      partialize: (state) => ({ items: state.items }),
     },
   ),
 )

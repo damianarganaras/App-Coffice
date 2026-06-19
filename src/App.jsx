@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react'
-import { AnimatePresence } from 'framer-motion'
 import Header from './components/Header.jsx'
 import CatalogView from './components/CatalogView.jsx'
 import SummaryView from './components/SummaryView.jsx'
@@ -61,14 +60,12 @@ export default function App() {
         onSwitchView={() => switchView(view === 'catalog' ? 'summary' : 'catalog')}
       />
       <PWAInstaller />
-      <main className="flex-1 overflow-hidden px-4 pt-4 pb-4">
-        <AnimatePresence>
-          {view === 'catalog' ? (
-            <CatalogView key="catalog" layout={layout} />
-          ) : (
-            <SummaryView key="summary" onBack={() => switchView('catalog')} />
-          )}
-        </AnimatePresence>
+      <main className="flex-1 overflow-hidden px-4 pt-4 pb-4 flex flex-col min-h-0">
+        {view === 'catalog' ? (
+          <CatalogView key="catalog" layout={layout} />
+        ) : (
+          <SummaryView key="summary" onBack={() => switchView('catalog')} />
+        )}
       </main>
     </div>
   )
