@@ -88,7 +88,7 @@ function ProductCard({ product, quantity, onTap, layout }) {
             animate={{ scale: 1, rotate: 0 }}
             exit={{ scale: 0, rotate: 20 }}
             transition={{ type: 'spring', stiffness: 500, damping: 12 }}
-            className="absolute top-1 right-1 flex items-baseline gap-0.5 px-2 py-0.5 rounded-full bg-white/70 dark:bg-transparent backdrop-blur-sm"
+            className="absolute top-1 right-1 flex items-baseline gap-0.5 px-2 py-0.5 rounded-full bg-white/70 dark:bg-transparent"
           >
             <span className="text-sm font-bold text-black/50 dark:text-white/50">x</span>
             <span className="text-4xl font-black text-black dark:text-white leading-none">
