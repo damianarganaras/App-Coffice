@@ -10,16 +10,16 @@ function ProductCard({ product, quantity, onTap, layout }) {
       whileTap={{ scale: 0.96 }}
       onClick={onTap}
       className={`
-        relative min-h-[48px] p-3 rounded-xl border
+        relative min-h-0 p-3 rounded-xl border
         bg-white dark:bg-gray-800
         border-gray-200 dark:border-gray-700
         hover:border-blue-400 dark:hover:border-blue-500
         transition-colors text-left select-none
-        ${layout === 'list' ? 'flex items-center justify-between w-full' : 'flex flex-col gap-2'}
+        ${layout === 'list' ? 'flex-1 flex items-center justify-between w-full' : 'flex flex-col gap-2'}
       `}
     >
       <div className="flex flex-col gap-1">
-        <span className="font-semibold text-sm">{product.name}</span>
+        <span className="font-semibold text-sm truncate">{product.name}</span>
         <span className="text-xs text-gray-500 dark:text-gray-400 capitalize">
           {product.category}
         </span>
@@ -54,16 +54,16 @@ export default function CatalogView({ layout }) {
   const products = getAllProducts()
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-4">
+    <div className="flex flex-col h-full">
+      <div className="flex items-center justify-between mb-4 flex-shrink-0">
         <h2 className="text-xl font-bold">Catálogo</h2>
         <AddCustomProduct />
       </div>
       <div
         className={
           layout === 'grid'
-            ? 'grid grid-cols-2 gap-3'
-            : 'flex flex-col gap-2'
+            ? 'flex-1 grid grid-cols-2 auto-rows-fr gap-3 min-h-0'
+            : 'flex-1 flex flex-col gap-2 min-h-0'
         }
       >
         {products.map((product) => (

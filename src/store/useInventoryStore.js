@@ -20,7 +20,7 @@ export const useInventoryStore = create(
       customProducts: [],
 
       getAllProducts: () => {
-        return [...BASELINE_PRODUCTS, ...get().customProducts]
+        return [...BASELINE_PRODUCTS, ...(get().customProducts || [])]
       },
 
       addCustomProduct: (name) => {

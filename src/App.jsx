@@ -51,7 +51,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-dark-bg text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <div className="h-dvh flex flex-col overflow-hidden bg-white dark:bg-dark-bg text-gray-900 dark:text-gray-100 transition-colors duration-300">
       <Header
         view={view}
         theme={theme}
@@ -61,8 +61,8 @@ export default function App() {
         onSwitchView={() => switchView(view === 'catalog' ? 'summary' : 'catalog')}
       />
       <PWAInstaller />
-      <main className="px-4 pb-8 pt-4">
-        <AnimatePresence mode="wait">
+      <main className="flex-1 overflow-hidden px-4 pt-4 pb-4">
+        <AnimatePresence>
           {view === 'catalog' ? (
             <CatalogView key="catalog" layout={layout} />
           ) : (

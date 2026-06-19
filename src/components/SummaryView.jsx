@@ -19,12 +19,11 @@ export default function SummaryView({ onBack }) {
 
   const handleClear = () => {
     clearOrder()
-    onBack()
   }
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-4">
+    <div className="flex flex-col h-full">
+      <div className="flex items-center justify-between mb-4 flex-shrink-0">
         <h2 className="text-xl font-bold">Pedido</h2>
         <button
           onClick={onBack}
@@ -35,14 +34,14 @@ export default function SummaryView({ onBack }) {
       </div>
 
       {activeItems.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-16 text-gray-400 dark:text-gray-500">
+        <div className="flex-1 flex flex-col items-center justify-center text-gray-400 dark:text-gray-500">
           <span className="text-5xl mb-4">☕</span>
           <p className="text-lg font-medium">No hay productos en el pedido</p>
           <p className="text-sm mt-1">Volvé al catálogo para agregar items</p>
         </div>
       ) : (
         <>
-          <ul className="flex flex-col gap-2 mb-6">
+          <ul className="flex-1 flex flex-col gap-2 mb-6 min-h-0 overflow-y-auto">
             {activeItems.map(([id, qty]) => {
               const product = productMap[id]
               return (
