@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/App-Coffice/dev-sw.js?dev-sw', { scope: '/App-Coffice/', type: 'classic' })

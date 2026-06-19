@@ -1,12 +1,24 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
+const DISMISSED_KEY = 'coffice-install-dismissed'
+
 export default function PWAInstaller() {
   const [showInstall, setShowInstall] = useState(false)
   const [showIOSModal, setShowIOSModal] = useState(false)
   const deferredPrompt = useRef(null)
+  const dismissed = useRef(false)
+
+  const saveDismissed = () => {
+    dismissed.current = true
+    localStorage.setItem(DISMISSED_KEY, '1')
+    setShowInstall(false)
+    setShowIOSModal(false)
+  }
 
   useEffect(() => {
+    if (localStorage.getItem(DISMISSED_KEY)) return
+
     const isStandalone = window.matchMedia(
       '(display-mode: standalone)',
     ).matches
@@ -23,6 +35,7 @@ export default function PWAInstaller() {
     }
 
     const handleBeforeInstall = (e) => {
+      if (dismissed.current) return
       e.preventDefault()
       deferredPrompt.current = e
       setShowInstall(true)
@@ -37,10 +50,11 @@ export default function PWAInstaller() {
     if (!deferredPrompt.current) return
     deferredPrompt.current.prompt()
     const { outcome } = await deferredPrompt.current.userChoice
+    deferredPrompt.current = null
     if (outcome === 'accepted') {
       setShowInstall(false)
+      localStorage.setItem(DISMISSED_KEY, '1')
     }
-    deferredPrompt.current = null
   }
 
   return (
@@ -52,14 +66,21 @@ export default function PWAInstaller() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -60, opacity: 0 }}
             transition={{ duration: 0.15 }}
-            className="flex items-center justify-center gap-3 px-4 py-3 bg-blue-600 text-white"
+            className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white"
           >
-            <span className="text-sm font-medium">Instalá la app para acceso rápido</span>
+            <span className="text-xs font-medium">Instalá la app</span>
             <button
               onClick={handleInstall}
-              className="min-h-[40px] px-4 rounded-lg bg-white text-blue-600 text-sm font-bold hover:bg-blue-50 transition-colors"
+              className="min-h-[36px] px-3 rounded-lg bg-white text-blue-600 text-xs font-bold hover:bg-blue-50 transition-colors"
             >
               Instalar
+            </button>
+            <button
+              onClick={saveDismissed}
+              className="min-h-[36px] min-w-[36px] flex items-center justify-center rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors text-lg leading-none"
+              aria-label="Cerrar"
+            >
+              ×
             </button>
           </motion.div>
         )}
@@ -73,7 +94,7 @@ export default function PWAInstaller() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
             className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm"
-            onClick={() => setShowIOSModal(false)}
+            onClick={saveDismissed}
           >
             <motion.div
               initial={{ y: '100%' }}
@@ -90,7 +111,7 @@ export default function PWAInstaller() {
                 <strong>"Agregar a Inicio"</strong>
               </p>
               <button
-                onClick={() => setShowIOSModal(false)}
+                onClick={saveDismissed}
                 className="w-full min-h-[48px] rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors"
               >
                 Entendido
