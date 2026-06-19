@@ -24,10 +24,10 @@ function ProductCard({ product, quantity, onTap, layout }) {
       animate={{ scale: 1, rotate: 0 }}
       exit={{ scale: 0, rotate: 20 }}
       transition={{ type: 'spring', stiffness: 500, damping: 12 }}
-      className="flex items-baseline gap-0.5 px-2 py-0.5 rounded-full bg-white/70 dark:bg-black/50 backdrop-blur-sm"
+      className="flex items-baseline gap-1"
     >
       <span className="text-sm font-bold text-black/50 dark:text-white/50">x</span>
-      <span className="text-4xl font-black text-black dark:text-white leading-none">
+      <span className="text-4xl font-extrabold text-black dark:text-white leading-none" style={{ textShadow: '0 0 1px currentColor' }}>
         {quantity}
       </span>
     </motion.span>
@@ -67,7 +67,7 @@ function ProductCard({ product, quantity, onTap, layout }) {
     <motion.button
       whileTap={{ scale: 0.97 }}
       onClick={handleTap}
-      className="relative flex flex-col items-center justify-center gap-1 p-3 rounded-xl border bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-500 transition-colors select-none min-h-0"
+      className="relative flex flex-col items-center justify-center gap-1 p-3 rounded-xl border  border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-500 transition-colors select-none min-h-0"
     >
       <motion.div
         animate={iconControls}
@@ -88,10 +88,10 @@ function ProductCard({ product, quantity, onTap, layout }) {
             animate={{ scale: 1, rotate: 0 }}
             exit={{ scale: 0, rotate: 20 }}
             transition={{ type: 'spring', stiffness: 500, damping: 12 }}
-            className="absolute top-1 right-1 flex items-baseline gap-0.5 px-2 py-0.5 rounded-full bg-white/70 dark:bg-transparent"
+            className="absolute top-1 right-1 flex items-baseline gap-1"
           >
             <span className="text-sm font-bold text-black/50 dark:text-white/50">x</span>
-            <span className="text-4xl font-black text-black dark:text-white leading-none">
+            <span className="text-4xl font-extrabold text-black dark:text-white leading-none" style={{ textShadow: '0 0 1px currentColor' }}>
               {quantity}
             </span>
           </motion.span>
