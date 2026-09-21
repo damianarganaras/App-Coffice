@@ -3,6 +3,7 @@ import Header from './components/Header.jsx'
 import CatalogView from './components/CatalogView.jsx'
 import SummaryView from './components/SummaryView.jsx'
 import PWAInstaller from './components/PWAInstaller.jsx'
+import { useOrderStore } from './store/useOrderStore.js'
 
 function getInitialTheme() {
   return localStorage.getItem('coffice-theme') || 'light'
@@ -16,6 +17,8 @@ export default function App() {
   const [view, setView] = useState('catalog')
   const [theme, setTheme] = useState(getInitialTheme)
   const [layout, setLayout] = useState(getInitialLayout)
+  const items = useOrderStore((s) => s.items)
+  const orderCount = Object.values(items).reduce((sum, qty) => sum + qty, 0)
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark')
@@ -41,6 +44,17 @@ export default function App() {
     return () => window.removeEventListener('popstate', handlePopState)
   }, [])
 
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        useOrderStore.getState().checkAndAutoReset()
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    return () =>
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+  }, [])
+
   const toggleTheme = () => {
     setTheme((t) => (t === 'dark' ? 'light' : 'dark'))
   }
@@ -55,6 +69,7 @@ export default function App() {
         view={view}
         theme={theme}
         layout={layout}
+        orderCount={orderCount}
         onToggleTheme={toggleTheme}
         onToggleLayout={toggleLayout}
         onSwitchView={() => switchView(view === 'catalog' ? 'summary' : 'catalog')}

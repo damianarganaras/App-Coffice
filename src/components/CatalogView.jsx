@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import { motion, AnimatePresence, useAnimationControls } from 'framer-motion'
 import { useInventoryStore, BASELINE_PRODUCTS } from '../store/useInventoryStore.js'
 import { useOrderStore } from '../store/useOrderStore.js'
 import AddCustomProduct from './AddCustomProduct.jsx'
+import ConfirmDialog from './ConfirmDialog.jsx'
 
 const BASE = import.meta.env.BASE_URL
 
@@ -105,8 +107,16 @@ export default function CatalogView({ layout }) {
   const customProducts = useInventoryStore((s) => s.customProducts)
   const items = useOrderStore((s) => s.items)
   const addItem = useOrderStore((s) => s.addItem)
+  const clearOrder = useOrderStore((s) => s.clearOrder)
+  const [confirmOpen, setConfirmOpen] = useState(false)
 
   const products = [...BASELINE_PRODUCTS, ...customProducts]
+  const orderCount = Object.values(items).reduce((sum, qty) => sum + qty, 0)
+
+  const handleConfirmClear = () => {
+    clearOrder()
+    setConfirmOpen(false)
+  }
 
   return (
     <div className="flex flex-col flex-1 min-h-0">
@@ -114,6 +124,24 @@ export default function CatalogView({ layout }) {
         <h2 className="text-xl font-bold">Catálogo</h2>
         <AddCustomProduct />
       </div>
+
+      <AnimatePresence>
+        {orderCount > 0 && (
+          <motion.button
+            key="reset-button"
+            initial={{ opacity: 0, height: 0, marginBottom: 0 }}
+            animate={{ opacity: 1, height: 'auto', marginBottom: 16 }}
+            exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+            transition={{ duration: 0.15 }}
+            onClick={() => setConfirmOpen(true)}
+            className="w-full min-h-[48px] flex items-center justify-center gap-2 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm font-semibold transition-colors hover:bg-red-100 dark:hover:bg-red-900/30 select-none flex-shrink-0 overflow-hidden"
+          >
+            <span aria-hidden="true">🗑️</span>
+            <span>Limpiar Pedido ({orderCount})</span>
+          </motion.button>
+        )}
+      </AnimatePresence>
+
       <div
         className={
           layout === 'grid'
@@ -131,6 +159,16 @@ export default function CatalogView({ layout }) {
           />
         ))}
       </div>
+
+      <ConfirmDialog
+        isOpen={confirmOpen}
+        title="Limpiar Pedido"
+        message="¿Estás seguro de que quieres borrar todo el pedido?"
+        confirmLabel="Sí, limpiar"
+        onConfirm={handleConfirmClear}
+        onCancel={() => setConfirmOpen(false)}
+        danger
+      />
     </div>
   )
 }

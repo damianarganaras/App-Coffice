@@ -1,0 +1,27 @@
+{
+  "last_updated": "2026-09-21T20:24:03.577Z",
+  "total_files": 84,
+  "tree_summary": {
+    ".github": 1,
+    ".opencode": 26,
+    "aspec": 1,
+    "dev-dist": 3,
+    "docs": 11,
+    "openspec": 11,
+    "public": 10,
+    "src": 10
+  },
+  "root_files": [
+    ".ancletorc",
+    ".discovery-map.json",
+    ".gitignore",
+    "app_context_spec.md",
+    "index.html",
+    "package-lock.json",
+    "package.json",
+    "postcss.config.js",
+    "tailwind.config.js",
+    "tsconfig.json",
+    "vite.config.js"
+  ]
+}

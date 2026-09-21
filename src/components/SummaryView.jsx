@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useOrderStore } from '../store/useOrderStore.js'
 import { useInventoryStore, BASELINE_PRODUCTS } from '../store/useInventoryStore.js'
+import ConfirmDialog from './ConfirmDialog.jsx'
 
 const BASE = import.meta.env.BASE_URL
 
@@ -11,6 +13,7 @@ export default function SummaryView({ onBack }) {
   const removeItem = useOrderStore((s) => s.removeItem)
   const deleteItem = useOrderStore((s) => s.deleteItem)
   const clearOrder = useOrderStore((s) => s.clearOrder)
+  const [confirmOpen, setConfirmOpen] = useState(false)
 
   const products = [...BASELINE_PRODUCTS, ...customProducts]
   const productMap = Object.fromEntries(products.map((p) => [p.id, p]))
@@ -19,8 +22,10 @@ export default function SummaryView({ onBack }) {
     ([, qty]) => qty > 0,
   )
 
-  const handleClear = () => {
+  const handleConfirmClear = () => {
     clearOrder()
+    setConfirmOpen(false)
+    onBack()
   }
 
   return (
@@ -101,13 +106,24 @@ export default function SummaryView({ onBack }) {
           </ul>
 
           <button
-            onClick={handleClear}
-            className="w-full min-h-[48px] rounded-xl bg-red-600 hover:bg-red-700 text-white font-semibold text-sm transition-colors"
+            onClick={() => setConfirmOpen(true)}
+            className="w-full min-h-[48px] flex items-center justify-center gap-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-semibold text-sm transition-colors"
           >
-            Limpiar Pedido
+            <span aria-hidden="true">🗑️</span>
+            <span>Limpiar Pedido</span>
           </button>
         </>
       )}
+
+      <ConfirmDialog
+        isOpen={confirmOpen}
+        title="Limpiar Pedido"
+        message="¿Estás seguro de que quieres borrar todo el pedido?"
+        confirmLabel="Sí, limpiar"
+        onConfirm={handleConfirmClear}
+        onCancel={() => setConfirmOpen(false)}
+        danger
+      />
     </div>
   )
 }
