@@ -24,12 +24,14 @@ export default function PWAInstaller() {
     ).matches
     if (isStandalone) return
 
-    const isIOS =
-      /iPhone|iPad|iPod/.test(navigator.userAgent) &&
-      /Safari/.test(navigator.userAgent) &&
-      !/CriOS|FxiOS|OPiOS|mercury/.test(navigator.userAgent)
+    const ua = navigator.userAgent
+    const esIPadOS = /Macintosh/.test(ua) && navigator.maxTouchPoints > 1
+    const esIOS =
+      (/iPhone|iPad|iPod/.test(ua) || esIPadOS) &&
+      /Safari/.test(ua) &&
+      !/CriOS|FxiOS|OPiOS|mercury/.test(ua)
 
-    if (isIOS) {
+    if (esIOS) {
       setShowIOSModal(true)
       return
     }
@@ -71,13 +73,13 @@ export default function PWAInstaller() {
             <span className="text-xs font-medium">Instalá la app</span>
             <button
               onClick={handleInstall}
-              className="min-h-[36px] px-3 rounded-lg bg-white text-blue-600 text-xs font-bold hover:bg-blue-50 transition-colors"
+              className="min-h-[48px] min-w-[48px] px-3 rounded-lg bg-white text-blue-600 text-xs font-bold hover:bg-blue-50 transition-colors"
             >
               Instalar
             </button>
             <button
               onClick={saveDismissed}
-              className="min-h-[36px] min-w-[36px] flex items-center justify-center rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors text-lg leading-none"
+              className="min-h-[48px] min-w-[48px] flex items-center justify-center rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors text-lg leading-none"
               aria-label="Cerrar"
             >
               ×
