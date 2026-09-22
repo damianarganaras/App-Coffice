@@ -8,6 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      manifestFilename: 'manifest.json',
       devOptions: {
         enabled: true,
       },
@@ -15,17 +16,21 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
       },
       manifest: {
+        id: '/App-Coffice/',
         name: 'Coffice - Cafetería',
         short_name: 'Coffice',
         description: 'App de pedidos para cafetería de oficina',
+        lang: 'es',
         theme_color: '#1e1e2e',
         background_color: '#ffffff',
         display: 'standalone',
         start_url: '/App-Coffice/',
         scope: '/App-Coffice/',
         icons: [
-          { src: './pwa-192x192.png', sizes: '192x192', type: 'image/png' },
-          { src: './pwa-512x512.png', sizes: '512x512', type: 'image/png' },
+          { src: './pwa-192x192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+          { src: './pwa-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
+          { src: './pwa-maskable-192x192.png', sizes: '192x192', type: 'image/png', purpose: 'maskable' },
+          { src: './pwa-maskable-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
         ],
       },
     }),
