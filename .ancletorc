@@ -1,12 +1,20 @@
 {
   "schemaVersion": 1,
-  "version": "0.6.5",
-  "installedAt": "2026-09-21T20:15:45.747Z",
+  "installedAt": "2026-09-23T19:24:58.830Z",
   "installedPaths": {
-    "templates": [],
-    "agents": [],
-    "commands": [],
-    "skills": []
+    "templates": [
+      "AGENTS.md",
+      "PRODUCT.md"
+    ],
+    "agents": [
+      ".opencode/agents"
+    ],
+    "commands": [
+      ".opencode/commands"
+    ],
+    "skills": [
+      ".opencode/skills"
+    ]
   },
   "azure": {
     "enabled": false
@@ -15,5 +23,6 @@
     "outputDir": "docs/technical-discovery",
     "exclude": []
   },
-  "agent": "opencode"
+  "agent": "opencode",
+  "version": "0.6.32"
 }

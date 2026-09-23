@@ -1,20 +1,23 @@
 {
-  "last_updated": "2026-09-21T20:24:03.577Z",
-  "total_files": 84,
+  "last_updated": "2026-09-23T18:54:35.216Z",
+  "total_files": 159,
   "tree_summary": {
     ".github": 1,
-    ".opencode": 26,
-    "aspec": 1,
+    ".opencode": 81,
+    "aspec": 11,
+    "design": 1,
     "dev-dist": 3,
-    "docs": 11,
+    "docs": 12,
     "openspec": 11,
-    "public": 10,
-    "src": 10
+    "public": 15,
+    "src": 11
   },
   "root_files": [
     ".ancletorc",
     ".discovery-map.json",
     ".gitignore",
+    "AGENTS.md",
+    "PRODUCT.md",
     "app_context_spec.md",
     "index.html",
     "package-lock.json",
