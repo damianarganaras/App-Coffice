@@ -62,7 +62,7 @@ export default function ConfirmDialog({
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: '100%', opacity: 0 }}
             transition={{ duration: 0.15 }}
-            className="w-full sm:max-w-sm bg-white dark:bg-gray-800 rounded-t-2xl sm:rounded-2xl p-6 shadow-xl"
+            className="w-full sm:max-w-sm bg-beige-surface dark:bg-navy-surface rounded-t-2xl sm:rounded-2xl p-6 shadow-xl"
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
@@ -75,7 +75,7 @@ export default function ConfirmDialog({
               {title}
             </h3>
             {message && (
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-5">
+              <p className="text-sm text-beige-muted dark:text-navy-muted mb-5">
                 {message}
               </p>
             )}
@@ -85,7 +85,7 @@ export default function ConfirmDialog({
                 type="button"
                 onClick={onCancel}
                 autoFocus
-                className="flex-1 min-h-[48px] rounded-xl border border-gray-300 dark:border-gray-600 text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                className="flex-1 min-h-[48px] rounded-xl border border-beige-border dark:border-navy-border text-sm font-medium hover:bg-beige-elevated dark:hover:bg-navy-elevated transition-colors"
               >
                 {cancelLabel}
               </button>
@@ -96,8 +96,8 @@ export default function ConfirmDialog({
                 className={
                   'flex-1 min-h-[48px] rounded-xl text-white text-sm font-medium transition-colors ' +
                   (danger
-                    ? 'bg-red-600 hover:bg-red-700'
-                    : 'bg-blue-600 hover:bg-blue-700')
+                    ? 'bg-accent-red hover:bg-accent-red-hover'
+                    : 'bg-accent-blue hover:bg-accent-blue-hover')
                 }
               >
                 {confirmLabel}

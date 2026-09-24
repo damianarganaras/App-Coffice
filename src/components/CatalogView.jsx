@@ -7,9 +7,14 @@ import ConfirmDialog from './ConfirmDialog.jsx'
 
 const BASE = import.meta.env.BASE_URL
 
+function isDoubleVariant(name) {
+  return /doble/i.test(name || '')
+}
+
 function ProductCard({ product, quantity, onTap, layout }) {
   const iconSrc = product.icon ? `${BASE}assets/icons/${product.icon}` : null
   const iconControls = useAnimationControls()
+  const isDouble = isDoubleVariant(product.name)
 
   const handleTap = () => {
     iconControls.start({
@@ -28,8 +33,8 @@ function ProductCard({ product, quantity, onTap, layout }) {
       transition={{ type: 'spring', stiffness: 500, damping: 12 }}
       className="flex items-baseline gap-1"
     >
-      <span className="text-sm font-bold text-black/50 dark:text-white/50">x</span>
-      <span className="text-4xl font-extrabold text-black dark:text-white leading-none" style={{ textShadow: '0 0 1px currentColor' }}>
+      <span className="text-sm font-bold text-beige-text/50 dark:text-navy-text/50">x</span>
+      <span className="text-4xl font-extrabold text-beige-text dark:text-navy-text leading-none" style={{ textShadow: '0 0 1px currentColor' }}>
         {quantity}
       </span>
     </motion.span>
@@ -40,7 +45,7 @@ function ProductCard({ product, quantity, onTap, layout }) {
       <motion.button
         whileTap={{ scale: 0.97 }}
         onClick={handleTap}
-        className="relative flex-1 flex items-center gap-3 p-3 rounded-xl border bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-500 transition-colors text-left select-none min-h-0"
+        className="relative flex-1 flex items-center gap-3 p-3 rounded-xl border bg-beige-surface dark:bg-navy-surface border-beige-border dark:border-navy-border hover:border-accent-blue dark:hover:border-accent-blue transition-colors text-left select-none min-h-0"
       >
         <motion.div
           animate={iconControls}
@@ -49,14 +54,19 @@ function ProductCard({ product, quantity, onTap, layout }) {
           {iconSrc ? (
             <img src={iconSrc} alt={product.name} className="w-full h-full object-contain" />
           ) : (
-            <div className="w-full h-full flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 text-lg">
+            <div className="w-full h-full flex items-center justify-center rounded-lg bg-beige-elevated dark:bg-navy-elevated text-lg">
               ☕
             </div>
           )}
         </motion.div>
         <div className="flex-1 min-w-0">
           <p className="font-semibold text-sm truncate">{product.name}</p>
-          <p className="text-xs text-gray-500 dark:text-gray-400 capitalize">{product.category}</p>
+          <p className="text-xs text-beige-muted dark:text-navy-muted capitalize">{product.category}</p>
+          {isDouble && (
+            <span className="mt-1 inline-block rounded-full bg-accent-red px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+              Doble
+            </span>
+          )}
         </div>
         <AnimatePresence>
           {quantityBadge}
@@ -69,8 +79,13 @@ function ProductCard({ product, quantity, onTap, layout }) {
     <motion.button
       whileTap={{ scale: 0.97 }}
       onClick={handleTap}
-      className="relative flex flex-col items-center justify-center gap-1 p-3 rounded-xl border  border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-500 transition-colors select-none min-h-0"
+      className="relative flex flex-col items-center justify-center gap-1 p-3 rounded-xl border bg-beige-surface dark:bg-navy-surface border-beige-border dark:border-navy-border hover:border-accent-blue dark:hover:border-accent-blue transition-colors select-none min-h-0"
     >
+      {isDouble && (
+        <span className="absolute top-1 left-1 rounded-full bg-accent-red px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+          Doble
+        </span>
+      )}
       <motion.div
         animate={iconControls}
         className="flex-1 flex items-center justify-center min-h-0 w-full"
@@ -92,8 +107,8 @@ function ProductCard({ product, quantity, onTap, layout }) {
             transition={{ type: 'spring', stiffness: 500, damping: 12 }}
             className="absolute top-1 right-1 flex items-baseline gap-1"
           >
-            <span className="text-sm font-bold text-black/50 dark:text-white/50">x</span>
-            <span className="text-4xl font-extrabold text-black dark:text-white leading-none" style={{ textShadow: '0 0 1px currentColor' }}>
+            <span className="text-sm font-bold text-beige-text/50 dark:text-navy-text/50">x</span>
+            <span className="text-4xl font-extrabold text-beige-text dark:text-navy-text leading-none" style={{ textShadow: '0 0 1px currentColor' }}>
               {quantity}
             </span>
           </motion.span>
@@ -125,22 +140,20 @@ export default function CatalogView({ layout }) {
         <AddCustomProduct />
       </div>
 
-      <AnimatePresence>
-        {orderCount > 0 && (
-          <motion.button
-            key="reset-button"
-            initial={{ opacity: 0, height: 0, marginBottom: 0 }}
-            animate={{ opacity: 1, height: 'auto', marginBottom: 16 }}
-            exit={{ opacity: 0, height: 0, marginBottom: 0 }}
-            transition={{ duration: 0.15 }}
-            onClick={() => setConfirmOpen(true)}
-            className="w-full min-h-[48px] flex items-center justify-center gap-2 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm font-semibold transition-colors hover:bg-red-100 dark:hover:bg-red-900/30 select-none flex-shrink-0 overflow-hidden"
-          >
-            <span aria-hidden="true">🗑️</span>
-            <span>Limpiar Pedido ({orderCount})</span>
-          </motion.button>
-        )}
-      </AnimatePresence>
+      <button
+        type="button"
+        onClick={() => setConfirmOpen(true)}
+        disabled={orderCount === 0}
+        className={
+          'w-full min-h-[48px] mb-4 flex items-center justify-center gap-2 rounded-xl border text-sm font-semibold transition-colors select-none flex-shrink-0 ' +
+          (orderCount === 0
+            ? 'bg-beige-elevated dark:bg-navy-elevated border-beige-border dark:border-navy-border text-beige-muted dark:text-navy-muted opacity-60 cursor-not-allowed'
+            : 'bg-accent-red hover:bg-accent-red-hover border-transparent text-white')
+        }
+      >
+        <span aria-hidden="true">🗑️</span>
+        <span>Limpiar Pedido{orderCount > 0 ? ` (${orderCount})` : ''}</span>
+      </button>
 
       <div
         className={

@@ -39,7 +39,7 @@ To prevent structural data corruption when resetting orders, data must be bifurc
 ### 2.2 Non-Functional Requirements (RNF)
 * **RNF1 - Touch Ergonomics:** All interactive elements must maintain a minimum bounding box of `48px x 48px` with safe margins to mitigate accidental fat-finger triggers on 6-inch viewports.
 * **RNF2 - Viewport Restrictions:** Set `<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />` to block accidental double-tap zoom intervals.
-* **RNF3 - UI Responsiveness & Dark Mode:** Fluid switching using Tailwind's `class` mechanism. Dark mode must target `#1e1e2e` (Slate/Dark Palette) to prevent glare in office environments.
+* **RNF3 - UI Responsiveness & Dark Mode:** Fluid switching using Tailwind's `class` mechanism. The dark theme uses a very dark navy app background `#0b1120` with surfaces (cards, panels, dialogs) in `#161f36` to prevent glare in office environments; the light theme derives its background and surfaces from the warm beige `#CEBC9B`. The previous dark background token `#1e1e2e` is no longer used on any themed surface.
 * **RNF4 - Instant Feedback Animating:** State transitions (incrementing counters, changing views, throwing alerts) must execute under 150ms using hardware-accelerated transitions via Framer Motion.
 
 ---

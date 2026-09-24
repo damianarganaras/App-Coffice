@@ -68,18 +68,18 @@ export default function PWAInstaller() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -60, opacity: 0 }}
             transition={{ duration: 0.15 }}
-            className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white"
+            className="flex items-center justify-center gap-2 px-4 py-2 bg-beige-surface dark:bg-navy-surface border-b border-beige-border dark:border-navy-border text-beige-text dark:text-navy-text"
           >
             <span className="text-xs font-medium">Instalá la app</span>
             <button
               onClick={handleInstall}
-              className="min-h-[48px] min-w-[48px] px-3 rounded-lg bg-white text-blue-600 text-xs font-bold hover:bg-blue-50 transition-colors"
+              className="min-h-[48px] min-w-[48px] px-3 rounded-lg bg-accent-blue text-white text-xs font-bold hover:bg-accent-blue-hover transition-colors"
             >
               Instalar
             </button>
             <button
               onClick={saveDismissed}
-              className="min-h-[48px] min-w-[48px] flex items-center justify-center rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors text-lg leading-none"
+              className="min-h-[48px] min-w-[48px] flex items-center justify-center rounded-lg text-beige-muted dark:text-navy-muted hover:bg-beige-elevated dark:hover:bg-navy-elevated transition-colors text-lg leading-none"
               aria-label="Cerrar"
             >
               ×
@@ -103,18 +103,18 @@ export default function PWAInstaller() {
               animate={{ y: 0 }}
               exit={{ y: '100%' }}
               transition={{ duration: 0.15 }}
-              className="w-full sm:max-w-sm bg-white dark:bg-gray-800 rounded-t-2xl sm:rounded-2xl p-6 shadow-xl text-center"
+              className="w-full sm:max-w-sm bg-beige-surface dark:bg-navy-surface rounded-t-2xl sm:rounded-2xl p-6 shadow-xl text-center"
               onClick={(e) => e.stopPropagation()}
             >
               <span className="text-4xl mb-3 block">📱</span>
               <h3 className="text-lg font-bold mb-2">Instalar en iPhone/iPad</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+              <p className="text-sm text-beige-muted dark:text-navy-muted mb-4">
                 Tocá el botón <strong>Compartir</strong> en Safari y luego{' '}
                 <strong>"Agregar a Inicio"</strong>
               </p>
               <button
                 onClick={saveDismissed}
-                className="w-full min-h-[48px] rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors"
+                className="w-full min-h-[48px] rounded-xl bg-accent-blue text-white text-sm font-medium hover:bg-accent-blue-hover transition-colors"
               >
                 Entendido
               </button>

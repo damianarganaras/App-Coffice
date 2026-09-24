@@ -64,7 +64,7 @@ export default function App() {
   }
 
   return (
-    <div className="h-dvh flex flex-col overflow-hidden bg-white dark:bg-dark-bg text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <div className="h-dvh flex flex-col overflow-hidden bg-beige-bg dark:bg-navy-bg text-beige-text dark:text-navy-text transition-colors duration-150">
       <Header
         view={view}
         theme={theme}
